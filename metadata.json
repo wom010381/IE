@@ -1,0 +1,6 @@
+{
+  "name": "Automotive Work Study & Manpower Planning System (AWSMPS)",
+  "description": "Comprehensive engineering system for automotive wiring harness work study, elemental time study, line balancing, standard work instructions, and validated manpower planning.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

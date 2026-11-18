@@ -1,0 +1,1083 @@
+# MASTER PROJECT PROMPT
+# AUTOMOTIVE WIRING HARNESS WORK STUDY, STANDARD WORK & MANPOWER PLANNING SYSTEM
+
+**Project Name:** Automotive Work Study & Manpower Planning System (AWSMPS)  
+**Version:** 1.0  
+**Application Type:** Local Web Application  
+**Technology:** PHP 8+, MySQL/MariaDB, HTML5, CSS3, JavaScript, Bootstrap 5  
+**Deployment:** Windows PC with XAMPP, Apache, and MariaDB/MySQL  
+**Network:** Internal plant LAN; internet connection must not be required  
+**Final Deliverable:** Complete, runnable application packaged as a ZIP file
+
+---
+
+## 1. PROJECT OBJECTIVE
+
+Develop a complete web-based system for managing work study, workload distribution, standard work documentation, operator training preparation, and manpower planning for automotive wiring harness assembly production.
+
+The system will be used by a team of skilled manpower responsible for studying new products, analyzing production processes, determining the correct work content, creating workloads, documenting standardized work procedures, and transferring the studied work to mass production operators.
+
+The system must convert the team's existing video-recording-based work-study method into a structured, measurable, traceable, and repeatable digital process.
+
+The ultimate objective is to determine:
+
+1. What work must be performed for each automotive wiring harness product model.
+2. How each operation must be performed correctly according to established standards.
+3. How much time each operation requires.
+4. How operations should be grouped and distributed among operators.
+5. How many operators are required based on order quantity, available production time, and target cycle time.
+6. Whether the proposed workloads are balanced and achievable.
+7. Whether the documented standard work has been transferred successfully to mass production.
+8. Whether actual production performance confirms the original work-study assumptions.
+
+The application must serve as a **work-study engineering tool, standard work management system, workload balancing tool, and manpower planning system**.
+
+It must not be merely a static dashboard or a basic data-entry application.
+
+---
+
+## 2. CORE SYSTEM PRINCIPLE
+
+The system must maintain a traceable connection between:
+
+**Product Model → Product Configuration → Work Study → Video Analysis → Operation Time → Standard Work → Workload Distribution → Manpower Calculation → Training Transfer → Mass Production Verification → Continuous Improvement**
+
+Every production model must have its own controlled work-study records and standard work documentation.
+
+Do not assume that different housing types, product models, circuit configurations, or wiring harness variants share the same work content.
+
+Changes in product design, circuit quantity, housing, components, process sequence, or work method must trigger a review of the affected work-study records.
+
+The system must preserve historical approved standards and must not silently overwrite previously approved work studies.
+
+---
+
+## 3. USER ROLES AND ACCESS CONTROL
+
+Implement secure login, role-based permissions, and audit trails.
+
+### A. System Administrator
+- Manage users, roles, permissions, and application settings.
+- Manage master data and system configuration.
+- Back up and restore application data.
+- Review system activity and audit logs.
+- Manage approval workflows.
+
+### B. Work Study Engineer / Skilled Manpower
+- Register product models and work-study projects.
+- Upload and review work-study videos.
+- Record observed task elements and operation times.
+- Calculate and validate standard times.
+- Create and balance operator workloads.
+- Prepare standard work instructions.
+- Propose required manpower.
+- Prepare training materials and transfer records.
+- Submit work studies for approval.
+
+### C. Work Study Leader / Reviewer
+- Review work-study methods, time observations, assumptions, and workload balance.
+- Check the completeness of documentation.
+- Review manpower calculations.
+- Return incomplete studies for correction.
+- Recommend approval or rejection.
+
+### D. Production Manager / Approver
+- Approve or reject work studies and manpower plans.
+- Review planned versus actual manpower.
+- Review target cycle time, expected output, workload balance, and production risks.
+- Approve changes to controlled standard work.
+
+### E. Production Line Leader
+- View approved standard work and assigned operator workloads.
+- Review operator training status.
+- Confirm actual production conditions and manpower assignment.
+- Record deviations and actual production performance.
+- Submit requests for work-study revision.
+
+### F. Management Viewer
+- Access read-only executive dashboards, manpower summaries, project status, and performance reports.
+
+Enforce permissions on the server, not merely by hiding buttons in the interface.
+
+---
+
+## 4. APPLICATION MODULES
+
+### MODULE 1: PRODUCT AND PROCESS MASTER DATA
+
+Create a structured master-data module containing:
+
+- Product model number.
+- Product name and description.
+- Part number and revision.
+- Customer or vehicle model.
+- Harness type or variant.
+- Housing and connector references.
+- Applicable circuit configuration.
+- Production process.
+- Assembly line.
+- Production method.
+- Required quality checkpoints.
+- Effective date.
+- Product status: Draft, Active, On Hold, Obsolete.
+- Related work-study revision.
+
+Each product model must have a distinct configuration.
+
+Support multiple variants and revisions without mixing their work-study data.
+
+The system must validate required fields and warn users when an existing product or revision already exists.
+
+### MODULE 2: WORK-STUDY PROJECT MANAGEMENT
+
+Create a project for each new product, revised product, process improvement, or work-study revalidation.
+
+Each project must contain:
+
+- Project ID.
+- Product model and revision.
+- Study purpose.
+- Customer or production requirement.
+- Assigned work-study engineer.
+- Reviewer and approver.
+- Study start date and target completion date.
+- Current production process.
+- Expected production quantity.
+- Planned production line.
+- Target cycle time.
+- Available production time per shift.
+- Planned number of shifts.
+- Current manpower, if applicable.
+- Required completion date.
+- Project status.
+- Supporting files and comments.
+
+Workflow statuses:
+
+Draft → Data Collection → Video Analysis → Time Study → Standard Work Preparation → Workload Balancing → Manpower Validation → Review → Approval → Training Transfer → Production Verification → Closed.
+
+Allow rejected projects to return to the appropriate earlier stage.
+
+Display incomplete requirements before allowing a project to proceed to approval.
+
+### MODULE 3: VIDEO-BASED WORK STUDY
+
+Video recording and analysis are the team's primary work-study methods.
+
+Build a video management interface that supports:
+
+- Uploading video files.
+- Linking videos to product models and revisions.
+- Recording the workstation, operator, process, and study date.
+- Recording video duration and playback position.
+- Playing and reviewing uploaded videos using a browser-supported video player.
+- Recording task elements with start time, end time, and duration.
+- Replaying selected sections for verification.
+- Adding observations, comments, and reference screenshots.
+- Identifying abnormal conditions, interruptions, and nonrepresentative cycles.
+- Linking each observation to a task element.
+- Comparing repeated observations.
+
+Each video observation must have a unique record and be traceable to its source video.
+
+Provide a manual frame-by-frame or timestamp-based analysis workflow where practical.
+
+Do not claim to perform automatic motion recognition, AI time measurement, or automatic work-element detection unless that functionality is actually implemented and tested.
+
+For video files, validate file type and size, store files securely, and avoid executing uploaded files. Allow configuration of permitted formats and maximum upload size.
+
+### MODULE 4: ELEMENTAL TIME STUDY
+
+Allow engineers to divide work into small, measurable task elements.
+
+Each task element must include:
+
+- Element ID.
+- Operation name.
+- Detailed work description.
+- Work sequence.
+- Workstation.
+- Required tools and equipment.
+- Required components or materials.
+- Start and end timestamps for each observation.
+- Observed duration.
+- Number of valid observations.
+- Abnormal or excluded observation flag.
+- Reason for exclusion.
+- Operator or observation reference, where appropriate.
+- Required quality checks.
+- Safety considerations.
+- Classification as manual, machine-controlled, walking, handling, inspection, or other approved category.
+
+Calculate observed duration from the recorded timestamps or accept a manually entered duration with validation.
+
+Reject negative durations, invalid timestamps, and incomplete observations.
+
+Calculate the average, minimum, maximum, median, and variation of valid observations when enough data is available.
+
+Do not automatically remove outliers without explaining the rule and allowing the engineer to review the affected observations.
+
+Keep raw observations immutable after approval. Corrections must create an auditable revision.
+
+### MODULE 5: STANDARD TIME CALCULATION
+
+Provide a transparent and configurable calculation engine.
+
+Distinguish between:
+
+- Observed time.
+- Normal time.
+- Allowance.
+- Standard time.
+- Target cycle time.
+- Available production time.
+- Actual output.
+- Theoretical output.
+
+Use the following formulas as the default calculation method, subject to the company's approved time-study policy.
+
+**Average observed time**
+
+Average observed time = Total valid observed time ÷ Number of valid observations.
+
+**Normal time**
+
+Normal time = Average observed time × Performance rating factor.
+
+Use a performance rating factor of 1.00 as the neutral default. Require the engineer to document and justify any different factor.
+
+**Standard time using an allowance expressed as a fraction of total standard time**
+
+Standard time = Normal time ÷ (1 − Allowance fraction).
+
+Example: Normal time = 45 seconds and allowance = 10%.
+
+Standard time = 45 ÷ 0.90 = 50 seconds.
+
+If the company instead defines allowance as a percentage of normal time, use the alternative formula:
+
+Standard time = Normal time × (1 + Allowance fraction).
+
+The selected convention must be configurable, clearly labeled, and applied consistently.
+
+Validate that allowance values are within the permitted range and less than 100% for the first formula.
+
+Support company-approved treatment of machine time, manual time, walking time, simultaneous activities, and unavoidable delays.
+
+Do not double-count overlapping activities.
+
+Every calculated standard time must retain its inputs, calculation method, revision, and approval status.
+
+### MODULE 6: STANDARD WORK DOCUMENTATION
+
+Allow engineers to create standardized work instructions for every product model and relevant workstation.
+
+Each standard work instruction must include:
+
+- Product model and revision.
+- Process and workstation.
+- Workload or operator assignment.
+- Operation sequence.
+- Detailed step-by-step instructions.
+- Required tools and equipment.
+- Required materials and components.
+- Photos or video references.
+- Critical quality points.
+- Safety precautions.
+- Expected completion time.
+- Standard work sequence.
+- Approved cycle-time reference.
+- Responsible reviewer and approver.
+- Effective date.
+- Document revision.
+- Change history.
+
+Provide an editor for arranging steps in sequence.
+
+Allow the engineer to attach photographs, screenshots, and video timestamps to individual work steps.
+
+Generate a print-friendly standard work document suitable for use at the production line.
+
+Provide PDF export only if a real PDF-generation function is implemented. Otherwise provide a print-friendly HTML page and browser printing.
+
+Maintain document revision control and identify obsolete documents so that they are not mistaken for current approved instructions.
+
+### MODULE 7: WORKLOAD DISTRIBUTION AND LINE BALANCING
+
+This is one of the system's most important modules.
+
+Allow engineers to distribute individual work elements across operator positions.
+
+Each operator position must show:
+
+- Position number.
+- Assigned task elements.
+- Total assigned standard time.
+- Target cycle time.
+- Time difference from target.
+- Workload utilization.
+- Remaining time or overload.
+- Required skills.
+- Required tools.
+- Quality checkpoints.
+- Work sequence dependencies.
+- Relevant standard work instructions.
+
+Provide an interactive workload board with drag-and-drop task assignment when practical.
+
+The system must automatically recalculate the affected workload whenever tasks are assigned, removed, or moved.
+
+**Workload utilization**
+
+Workload utilization = Total assigned standard time ÷ Target cycle time × 100%.
+
+**Time difference**
+
+Time difference = Target cycle time − Total assigned standard time.
+
+Interpretation:
+
+- Positive time difference: theoretical time remaining.
+- Zero time difference: workload equals the target cycle time.
+- Negative time difference: workload exceeds the target cycle time.
+
+Make the overload and underload thresholds configurable.
+
+Highlight overloaded positions, substantially underloaded positions, missing task assignments, and tasks assigned more than once.
+
+Do not assume that equal workload time is automatically the best assignment. Respect precedence constraints, product sequence, physical layout, operator skill, quality requirements, safety requirements, machine restrictions, and simultaneous operations.
+
+Allow manual adjustment by the engineer, with recalculation and an audit trail.
+
+### MODULE 8: VALIDATED MANPOWER PLANNING CALCULATOR
+
+Develop a manpower calculator that determines required manpower using demand, available time, target cycle time, and validated work content.
+
+The calculator must distinguish between two different questions:
+
+1. How many operators are required to achieve the planned output?
+2. How many operators are required to perform the measured work content within the target cycle time?
+
+These are related but not identical calculations.
+
+#### A. Takt time from customer demand
+
+Available production time must exclude nonworking periods such as scheduled breaks when the company defines those breaks as unavailable production time.
+
+Takt time = Net available production time ÷ Required customer quantity.
+
+Convert units consistently.
+
+For example, if net available production time is 25,200 seconds per shift and required demand is 700 units per shift:
+
+Takt time = 25,200 ÷ 700 = 36 seconds per unit.
+
+#### B. Cycle time
+
+Cycle time is the time interval between successive completed units at the defined production output point.
+
+The target cycle time must be explicitly identified as a planning assumption, customer requirement, or approved engineering target.
+
+Do not automatically equate target cycle time with takt time.
+
+#### C. Required operators based on work content
+
+The theoretical minimum direct operator count is:
+
+Required operators = Ceiling of (Total standard work content per unit ÷ Target cycle time).
+
+For example:
+
+- Total standard work content = 180 seconds per unit.
+- Target cycle time = 36 seconds per unit.
+- Theoretical minimum = Ceiling(180 ÷ 36) = 5 operators.
+
+This is a theoretical work-content calculation, not a guarantee of actual achievable production output.
+
+The application must also check whether a feasible task assignment exists under the cycle-time, precedence, skill, safety, and equipment constraints.
+
+#### D. Demand-based capacity check
+
+Expected output per shift at a stable cycle time is:
+
+Theoretical output = Net available production time ÷ Cycle time.
+
+For a single-unit output process, this calculation is valid only if the cycle time represents the output interval of the complete line.
+
+For parallel stations, multiple outputs per cycle, or batch processes, use the appropriate capacity model.
+
+Expected output must not exceed the modeled capacity.
+
+#### E. Efficiency and availability scenarios
+
+Allow engineers to model an explicitly defined planning factor for availability or performance when supported by company data.
+
+Where a valid combined capacity factor is used:
+
+Adjusted planning capacity = Net available production time × Planning factor ÷ Target cycle time.
+
+Required operating time must be calculated consistently with the selected model.
+
+Do not apply the same loss factor twice.
+
+Clearly label assumptions such as line efficiency, downtime, changeover time, absenteeism, and operator availability.
+
+Do not confuse line efficiency with individual operator workload utilization.
+
+#### F. Staffing and relief planning
+
+Support additional staffing calculations for:
+
+- Planned absenteeism.
+- Leave coverage.
+- Training assignments.
+- Relief operators.
+- Multiple shifts.
+- Parallel production lines.
+- Different product models.
+- Model mix and product changeovers.
+
+Keep direct production manpower separate from relief, support, and indirect manpower.
+
+Only include staffing factors when their definitions and company-approved values are available.
+
+#### G. Manpower result
+
+Display:
+
+- Current manpower.
+- Theoretical minimum manpower.
+- Proposed assigned manpower.
+- Additional manpower required.
+- Potential manpower reduction, if supported by validated evidence.
+- Total standard work content.
+- Target cycle time.
+- Takt time.
+- Required output.
+- Expected capacity.
+- Workload utilization by position.
+- Overloaded and underloaded positions.
+- Feasibility warnings.
+- Key assumptions.
+- Confidence or validation status.
+
+Never automatically recommend manpower reduction solely because a theoretical calculation produces a lower number.
+
+The result must be labeled **Preliminary**, **Validated**, or **Approved** according to the verification and approval workflow.
+
+### MODULE 9: WORKLOAD FEASIBILITY AND CONSTRAINT VALIDATION
+
+Before a manpower plan can be approved, run a validation checklist.
+
+Check:
+
+1. Every required task has been assigned.
+2. No task has been assigned twice unintentionally.
+3. All standard times are based on approved or explicitly provisional data.
+4. Every assigned position is within its configured workload limit or has a documented exception.
+5. Precedence requirements are respected.
+6. Required operator skills are available.
+7. Tools and equipment are available.
+8. Quality checkpoints are included.
+9. Safety constraints are respected.
+10. Machine-controlled and manual activities are modeled correctly.
+11. Overlapping tasks are not double-counted.
+12. Planned demand can be supported by the modeled production capacity.
+13. Product and process revisions match the approved work study.
+14. Any unverified assumption is clearly identified.
+
+A warning must explain the exact problem and suggest the information or correction required.
+
+A theoretical manpower result must never be presented as proof that the line is operationally feasible.
+
+If a constraint cannot be checked with available information, show it as **Not Verified**, not as Passed.
+
+### MODULE 10: SKILL MATRIX AND TRAINING TRANSFER
+
+Create a skill matrix linking operators to product models, processes, and work elements.
+
+Record:
+
+- Operator ID.
+- Operator name.
+- Assigned line and shift.
+- Product model.
+- Workstation.
+- Required skill.
+- Training date.
+- Trainer.
+- Training status.
+- Assessment result.
+- Qualification date.
+- Requalification due date, if applicable.
+- Training evidence.
+- Remarks.
+
+Support these statuses:
+
+Not Started → Training → Under Evaluation → Qualified → Requalification Required.
+
+Allow engineers to generate training materials directly from approved standard work.
+
+Record the transfer of work-study knowledge from skilled manpower to the production line.
+
+Require the responsible trainer and line leader to verify that the operator can perform the assigned work according to the approved method.
+
+Do not treat attendance alone as proof of competence.
+
+### MODULE 11: MASS PRODUCTION VERIFICATION
+
+After transferring the standard work to mass production, record actual operating results.
+
+Capture:
+
+- Product model and revision.
+- Production line.
+- Shift and date.
+- Planned manpower.
+- Actual manpower.
+- Target cycle time.
+- Actual cycle time.
+- Planned output.
+- Actual output.
+- Downtime.
+- Quality defects.
+- Rework.
+- Operator training status.
+- Work-method deviations.
+- Material shortages.
+- Equipment constraints.
+- Actual workload observations.
+- Supervisor remarks.
+
+Compare planned and actual results.
+
+Calculate:
+
+Output achievement = Actual output ÷ Planned output × 100%.
+
+Cycle-time gap = Actual cycle time − Target cycle time.
+
+Manpower gap = Actual manpower − Approved planned manpower.
+
+Show positive and negative gaps with clearly defined interpretation.
+
+Identify whether poor performance is associated with work content, manpower shortage, operator skill, equipment, materials, quality issues, or other documented factors.
+
+Do not automatically assign blame to operators without evidence.
+
+Allow the engineer to initiate a new work study or improvement project when actual results differ materially from the approved plan.
+
+### MODULE 12: MANAGEMENT DASHBOARD AND REPORTS
+
+Create an executive dashboard containing:
+
+- Total active product models.
+- Work-study projects by status.
+- Pending approvals.
+- Completed work studies.
+- Products awaiting standard work.
+- Training completion status.
+- Planned versus actual manpower.
+- Theoretical versus approved manpower.
+- Workload balance by line.
+- Cycle-time achievement.
+- Planned versus actual production output.
+- Work-study revision history.
+- Projects overdue.
+- Major unresolved production constraints.
+
+Provide filters by date, product model, part number, revision, process, line, shift, engineer, and approval status.
+
+Create detailed reports for:
+
+1. Product work-study summary.
+2. Video observation and elemental time study.
+3. Standard-time calculation.
+4. Standard work instructions.
+5. Workload assignment by operator position.
+6. Manpower calculation and assumptions.
+7. Workload feasibility checklist.
+8. Operator skill matrix.
+9. Training transfer.
+10. Mass production verification.
+11. Work-study revision history.
+12. Management project summary.
+
+Provide CSV export for tabular data and print-friendly reports.
+
+Every management report must distinguish actual data, calculated results, assumptions, estimates, and approved targets.
+
+---
+
+## 5. DATABASE DESIGN
+
+Use MySQL or MariaDB with InnoDB, foreign keys, appropriate indexes, and UTF-8 support.
+
+Create a database named:
+
+`awsmps`
+
+The installation process must create the database and tables automatically when permitted by the database account.
+
+Include a complete SQL schema file for manual installation and recovery.
+
+Design the database with normalized tables, including at minimum:
+
+- users
+- roles
+- permissions
+- user_roles
+- products
+- product_revisions
+- product_variants
+- processes
+- production_lines
+- workstations
+- work_study_projects
+- project_assignments
+- video_files
+- video_observations
+- task_elements
+- time_observations
+- time_study_results
+- standard_time_revisions
+- standard_work_documents
+- standard_work_revisions
+- standard_work_steps
+- workload_plans
+- workload_plan_revisions
+- operator_positions
+- workload_assignments
+- task_precedence
+- skill_requirements
+- operator_skills
+- training_records
+- manpower_plans
+- manpower_plan_assumptions
+- manpower_plan_revisions
+- feasibility_checks
+- approval_records
+- production_verification
+- production_results
+- improvement_actions
+- attachments
+- audit_logs
+- application_settings
+
+Add other tables where necessary.
+
+Use appropriate relationships and unique constraints.
+
+Store calculation inputs and results in a traceable way so approved calculations can be reproduced.
+
+Use database transactions for multi-step updates.
+
+Avoid storing critical calculated results only in browser JavaScript or temporary session variables.
+
+Do not use a single generic table to store every type of record.
+
+Provide migrations or a versioned schema update mechanism.
+
+The installer must check whether tables already exist and must not destroy production data during an ordinary update.
+
+---
+
+## 6. USER INTERFACE DESIGN
+
+Create a professional, modern, clean, and minimal manufacturing engineering interface.
+
+The application must prioritize readability, fast data entry, and usability on desktop PCs used inside the factory.
+
+Design requirements:
+
+- Large, readable text.
+- Clear navigation.
+- Consistent terminology.
+- Responsive layout.
+- Searchable tables.
+- Filters and sorting.
+- Pagination for large datasets.
+- Clear status indicators.
+- Useful validation messages.
+- Confirmation for destructive actions.
+- Accessible form labels.
+- Keyboard-friendly navigation.
+- Dashboard cards and charts where appropriate.
+- Print-friendly work instructions.
+- Clear distinction between draft, submitted, approved, and obsolete records.
+
+Primary navigation:
+
+1. Dashboard
+2. Product Master
+3. Work Study Projects
+4. Video Analysis
+5. Time Study
+6. Standard Work
+7. Workload Balancing
+8. Manpower Planning
+9. Skill Matrix
+10. Training Transfer
+11. Production Verification
+12. Reports
+13. Administration
+
+The most important workflow must be accessible without navigating through unnecessary screens.
+
+A user should be able to open a work-study project and move through its stages while retaining context about the selected product and revision.
+
+---
+
+## 7. APPLICATION ARCHITECTURE AND CODING RULES
+
+Use:
+
+- PHP 8.1 or later.
+- MySQL or MariaDB.
+- PDO prepared statements.
+- HTML5.
+- CSS3.
+- JavaScript.
+- Bootstrap 5.
+- Locally stored assets and libraries where possible.
+
+The application must run on Windows using XAMPP.
+
+Suggested installation directory:
+
+`C:\xampp\htdocs\awsmps\`
+
+Suggested URL:
+
+`http://localhost/awsmps/public/`
+
+Provide a configurable base URL so the application can be accessed from authorized plant LAN computers.
+
+Use a clean project structure separating:
+
+- Configuration.
+- Database access.
+- Authentication.
+- Authorization.
+- Business logic.
+- Calculation services.
+- Controllers.
+- Views.
+- Public assets.
+- Upload storage.
+- Reports.
+- Installation.
+- Database migrations.
+
+Use reusable components rather than duplicating application logic across PHP pages.
+
+Do not put the entire application into one enormous PHP file.
+
+The system must use server-side validation even when client-side validation is present.
+
+Implement:
+
+- Password hashing.
+- Session security.
+- Role-based authorization.
+- CSRF protection.
+- Output escaping.
+- SQL injection protection.
+- Secure upload validation.
+- Restricted access to uploaded files.
+- Audit logging.
+- Error logging.
+- Database transaction handling.
+- Safe configuration of database credentials.
+
+Do not expose database credentials, PHP errors, internal file paths, or stack traces to ordinary users.
+
+Store database credentials in a local configuration file excluded from public access.
+
+Never require an internet connection, cloud database, Google Sheets, or external paid API for core functions.
+
+Do not introduce a framework or dependency that makes installation unnecessarily complicated.
+
+---
+
+## 8. DATA VALIDATION AND BUSINESS RULES
+
+Apply these rules throughout the application:
+
+1. No approved standard time without traceable observations or an explicitly documented alternative approved method.
+2. No approved manpower plan without a defined production demand, target cycle time, net available time, and documented assumptions.
+3. No assignment to a nonexistent product, revision, process, workstation, or task.
+4. No negative time values.
+5. No duplicate workload assignment unless the task model explicitly permits it.
+6. No silent modification of approved records.
+7. No approval by an unauthorized user.
+8. No automatic replacement of a valid approved standard when a new study is created.
+9. No misleading presentation of theoretical capacity as actual output.
+10. No unverified constraint marked as passed.
+11. No unsupported claim of AI automation.
+12. No deletion of audit history through ordinary user actions.
+
+Allow approved exceptions with reasons and responsible approvers.
+
+All calculations must have documented units and explicit rounding rules.
+
+Use decimal or sufficiently precise numeric storage for time and calculations. Apply rounding only for presentation or at explicitly defined business-rule boundaries.
+
+---
+
+## 9. SAMPLE DATA AND DEMONSTRATION
+
+Provide realistic demonstration data for automotive wiring harness assembly.
+
+Include at least:
+
+- Three sample product models.
+- Multiple product revisions.
+- Several assembly processes.
+- Multiple task elements.
+- Example time observations.
+- Example standard work steps.
+- Example operator positions.
+- Example workload assignments.
+- Example manpower plans.
+- Example training records.
+- Example production verification records.
+
+Use clearly identified demonstration data. Do not present invented sample values as actual company data.
+
+Include a sample work-study scenario showing the entire process from video observation to manpower planning and production verification.
+
+For the sample manpower calculation, use:
+
+- Net available production time: 25,200 seconds per shift.
+- Required production quantity: 700 units per shift.
+- Total standard work content: 180 seconds per unit.
+- Target cycle time: 36 seconds per unit.
+
+Expected calculation results:
+
+- Takt time: 36 seconds per unit.
+- Theoretical minimum direct manpower: 5 operators.
+- Theoretical output at a 36-second output interval: 700 units per shift.
+
+Explain that these results do not establish actual line feasibility unless workload assignments, process constraints, equipment, skills, and production conditions are also validated.
+
+Allow all sample data to be removed or replaced without breaking the database structure.
+
+---
+
+## 10. TESTING AND ACCEPTANCE REQUIREMENTS
+
+The application is not complete merely because its pages open.
+
+Test the following functions:
+
+### Installation
+- Fresh installation.
+- Database creation.
+- Schema installation.
+- Administrator account setup.
+- Existing database protection.
+- Configuration errors and recovery instructions.
+
+### Authentication
+- Login and logout.
+- Invalid credentials.
+- Session expiration.
+- Permission restrictions.
+- Unauthorized URL access.
+
+### Work Study
+- Product creation.
+- Product revision control.
+- Project creation and status transitions.
+- Video upload and playback.
+- Time observation entry.
+- Standard-time calculation.
+- Work-study approval.
+
+### Workload and Manpower
+- Workload assignment and reassignment.
+- Overload detection.
+- Underload detection.
+- Duplicate assignment detection.
+- Takt-time calculation.
+- Theoretical manpower calculation.
+- Capacity calculation.
+- Multiple-shift handling.
+- Invalid input rejection.
+- Constraint validation.
+- Calculation reproducibility.
+
+### Standard Work and Training
+- Document creation.
+- Revision control.
+- Print output.
+- Training assignment.
+- Qualification recording.
+- Unauthorized approval prevention.
+
+### Production Verification
+- Actual output entry.
+- Cycle-time gap calculation.
+- Planned versus actual manpower.
+- Work-study revalidation workflow.
+
+### Data Integrity
+- Foreign key validation.
+- Duplicate record prevention.
+- Transaction rollback.
+- Audit log creation.
+- Backup and restore.
+
+Use automated tests where practical, especially for calculation logic.
+
+For the sample scenario, verify the expected results stated above.
+
+Report any untested functionality honestly.
+
+---
+
+## 11. REQUIRED PROJECT FILES
+
+The final ZIP must contain a complete application, not just source-code examples or a project plan.
+
+Expected structure:
+
+`AWSMPS/`
+- `README.md`
+- `INSTALLATION_GUIDE.md`
+- `CHANGELOG.md`
+- `config/`
+- `app/`
+  - `Controllers/`
+  - `Models/`
+  - `Services/`
+  - `Views/`
+  - `Middleware/`
+- `public/`
+  - `index.php`
+  - `assets/`
+  - `.htaccess`
+- `database/`
+  - `schema.sql`
+  - `seed_demo.sql`
+  - `migrations/`
+- `storage/`
+  - `uploads/`
+  - `logs/`
+  - `backups/`
+- `tests/`
+- `scripts/`
+- `LICENSES_AND_DEPENDENCIES.md`
+
+Include any additional files needed for a functional installation.
+
+Do not include real company data, real employee personal data, production passwords, or secrets.
+
+Do not package unnecessary operating-system files or temporary development files.
+
+---
+
+## 12. INSTALLATION AND LAN DEPLOYMENT
+
+Provide a step-by-step installation guide for a Windows PC running XAMPP.
+
+The guide must explain:
+
+1. Installing and starting Apache and MySQL/MariaDB.
+2. Extracting the application to the specified directory.
+3. Configuring the local database connection.
+4. Creating the database and tables.
+5. Creating the first administrator account securely.
+6. Setting writable storage directories.
+7. Testing the application locally.
+8. Configuring Apache for authorized LAN access.
+9. Identifying the host PC's LAN IP address.
+10. Opening the application from another authorized plant computer.
+11. Configuring firewall rules safely.
+12. Backing up the database and uploaded videos.
+13. Updating the application without losing data.
+14. Troubleshooting common XAMPP, PHP, database, permissions, and upload errors.
+
+Use secure LAN deployment practices. Do not recommend exposing the development server directly to the public internet.
+
+---
+
+## 13. FINAL DELIVERY REQUIREMENTS
+
+Build the complete system in the current development environment.
+
+Follow this sequence:
+
+**Phase 1 — Foundation**
+- Create the project structure.
+- Implement the database schema.
+- Implement configuration, installation, authentication, and permissions.
+
+**Phase 2 — Work Study**
+- Implement product master data.
+- Implement project management.
+- Implement video management.
+- Implement elemental time study and standard-time calculations.
+
+**Phase 3 — Standard Work and Planning**
+- Implement standard work documentation.
+- Implement workload assignment and balancing.
+- Implement manpower planning and constraint validation.
+
+**Phase 4 — Training and Production**
+- Implement the skill matrix.
+- Implement training transfer.
+- Implement mass production verification.
+- Implement reports and dashboards.
+
+**Phase 5 — Verification**
+- Test database integrity.
+- Test all core calculations.
+- Test permissions and workflows.
+- Test the installation process.
+- Correct PHP errors, SQL errors, and broken links.
+- Verify that uploaded videos and generated records are accessible to authorized users.
+
+**Phase 6 — Packaging**
+- Package the entire runnable project into `WorkStudy_System.zip`.
+- Include all required application files, database schema, demonstration data, and installation documentation.
+- Exclude secrets and real production data.
+- Verify that the ZIP exists and is readable.
+- List the main files and modules included.
+- Provide the actual download link to the generated ZIP.
+- Report the tests that passed and any remaining limitations.
+
+If the development environment supports direct file creation and ZIP packaging, create the files and package them instead of merely printing the source code.
+
+If any functionality cannot be completed, clearly identify it. Do not create empty placeholder modules and claim that the application is complete.
+
+If the full application is too large to implement in one step, continue implementing it in manageable phases until all required files are present, integrated, and tested.
+
+**Do not stop after producing a prompt, a design document, a database schema, a mockup, or a few sample PHP pages. The final objective is a runnable, integrated web application packaged in a ZIP file.**
+
+---
+
+## 14. FINAL SUCCESS CRITERIA
+
+The project is accepted only when the application can be installed on XAMPP, accessed through the plant LAN, and used to complete a traceable work-study cycle:
+
+1. Register a product and revision.
+2. Create a work-study project.
+3. Upload and analyze a work-study video.
+4. Record elemental time observations.
+5. Calculate and review standard times.
+6. Create standard work documentation.
+7. Distribute tasks across operator positions.
+8. Calculate required manpower using validated inputs.
+9. Identify workload imbalances and feasibility constraints.
+10. Submit and approve the manpower plan.
+11. Prepare and record training transfer.
+12. Compare the approved plan with actual mass production results.
+13. Revise the study when verified evidence requires improvement.
+14. Export management reports.
+15. Back up and restore application data.
+
+**Build the system as a practical engineering application for automotive wiring harness manufacturing. Prioritize calculation accuracy, traceability, standardization, ease of use, and reliable manpower decisions over decorative features.**
